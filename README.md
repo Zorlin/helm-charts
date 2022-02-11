@@ -1,7 +1,6 @@
 # Helm charts
 Helm charts!
 
-* Apache Guacamole (coming soon)
 * MRBS - Meeting Room Booking System (coming soon)
 
 ## Usage
