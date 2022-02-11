@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  mrbs:
+  - apiVersion: v2
+    appVersion: 1.10.0
+    created: "2022-02-11T23:27:08.869995862Z"
+    description: A Helm chart for the Meeting Room Booking System
+    digest: 53ca829f1c22edaebc86af6a8ef0717c281cd0e24a31899b74b7b926e53630c6
+    name: mrbs
+    type: application
+    urls:
+    - https://github.com/Zorlin/helm-charts/releases/download/mrbs-0.1.0/mrbs-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-02-11T23:27:08.870002162Z"
