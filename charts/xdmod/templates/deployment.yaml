@@ -37,6 +37,7 @@ spec:
         - name: xdmod-munge
           secret:
             secretName: xdmod-munge
+            defaultMode: 0400
         - name: xdmod-slurm
           configMap:
             name: xdmod-slurm-configmap
@@ -48,15 +49,13 @@ spec:
         - name: {{ .Chart.Name }}-init
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          #command: ["sleep", "infinity"]
           command: ["cp", "-R", "-u", "-p", "/etc/xdmod/.", "/etc/xdmod-mounted"]
-           #- "cp -R -u /etc/xdmod/ /etc/xdmod-mounted/"
-           # - sleep infinity
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - mountPath: "/etc/xdmod-mounted/"
               name: xdmod-config
+
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -67,10 +66,10 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
-          #livenessProbe:
-          #  httpGet:
-          #    path: /
-          #    port: http
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
           readinessProbe:
             httpGet:
               path: /
@@ -93,13 +92,13 @@ spec:
             {{- toYaml .Values.slurm_collector.securityContext | nindent 12 }}
           image: "{{ .Values.slurm_collector.image.repository }}:{{ .Values.slurm_collector.image.tag }}"
           imagePullPolicy: {{ .Values.slurm_collector.image.pullPolicy }}
-          command: ["munged"]
+          command: ["/usr/bin/run-munge"]
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - mountPath: "/etc/munge-secret"
+            - mountPath: "/etc/munge/munge.key"
               name: xdmod-munge
-              readOnly: true
+              subPath: munge.key
             - name: xdmod-slurm
               mountPath: /etc/slurm/slurm.conf
               subPath: slurm.conf
@@ -108,13 +107,6 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - /bin/sh
-                  - -c
-                  - cp /etc/munge-secret/munge.key /etc/munge/munge.key && chown munge:munge /etc/munge/munge.key && chmod 400 /etc/munge/munge.key
 
       {{- with .Values.nodeSelector }}
       nodeSelector:

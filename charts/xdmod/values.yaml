@@ -16,15 +16,7 @@ slurm_collector:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
-  securityContext:
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 999
-
-
+  securityContext: {}
 
 env:
   EMAIL: "zorlin@gmail.com"
