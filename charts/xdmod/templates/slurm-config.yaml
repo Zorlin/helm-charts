@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: xdmod-slurm-configmap
+binaryData:
+  slurm.conf: |-
+{{ .Files.Get "slurm.conf" | b64enc | indent 4 }}

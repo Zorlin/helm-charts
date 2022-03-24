@@ -1,0 +1,25 @@
+{{- if .Values.persistence.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "xdmod.fullname" . }}-config
+  labels:
+    app: {{ include "xdmod.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+  annotations:
+  {{- if .Values.persistence.keep }}
+    helm.sh/resource-policy: "keep"
+  {{- end }}
+  {{- if .Values.persistence.storageClass }}
+    volume.beta.kubernetes.io/storage-class: {{ .Values.persistence.storageClass | quote }}
+  {{- else }}
+    volume.alpha.kubernetes.io/storage-class: default
+  {{- end }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: 1Gi
+{{- end }}
