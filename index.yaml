@@ -3,12 +3,12 @@ entries:
   xdmod:
   - apiVersion: v2
     appVersion: 10.0.0
-    created: "2022-03-25T04:22:52.139862579Z"
+    created: "2022-03-25T04:37:57.421721276Z"
     description: A Helm chart for Open XDMoD
-    digest: c221d4ac36cf621d1171c415691bc155f9e6a31d4833c0a45fc883b4a01550ac
+    digest: 96a50d12982814ab9957c8338e511344ed2c426872bc8f1e5f2f12038c87f438
     name: xdmod
     type: application
     urls:
     - https://github.com/Zorlin/helm-charts/releases/download/xdmod-0.2.0/xdmod-0.2.0.tgz
     version: 0.2.0
-generated: "2022-03-25T04:22:52.139903179Z"
+generated: "2022-03-25T04:37:57.421812277Z"
