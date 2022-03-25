@@ -1,2 +1,5 @@
+# Site-specific configuration
 charts/xdmod/munge.key
 charts/xdmod/slurm.conf
+charts/xdmod/ingest.cfg
+charts/xdmod/collect.cfg

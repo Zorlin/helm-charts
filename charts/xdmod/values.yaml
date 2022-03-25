@@ -15,7 +15,7 @@ slurm_collector:
     repository: zorlin/slurm-collector
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "latest"
+    tag: "0.2.0"
   securityContext: {}
 
 env:

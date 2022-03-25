@@ -2,6 +2,7 @@
 Helm charts!
 
 * MRBS - Meeting Room Booking System (coming soon)
+* XDMoD - Open XDMoD
 
 ## Usage
 
