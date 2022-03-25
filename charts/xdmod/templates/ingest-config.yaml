@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: xdmod-ingest-configmap
+binaryData:
+  ingest.cfg: |-
+{{ .Files.Get "ingest.cfg" | b64enc | indent 4 }}

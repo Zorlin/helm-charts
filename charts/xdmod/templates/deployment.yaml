@@ -34,6 +34,9 @@ spec:
         - name: xdmod-database
           persistentVolumeClaim:
             claimName: xdmod-database
+        - name: xdmod-ingest
+          persistentVolumeClaim:
+            claimName: xdmod-ingest
         - name: xdmod-munge
           secret:
             secretName: xdmod-munge
@@ -45,6 +48,13 @@ spec:
             items:
             - key: slurm.conf
               path: slurm.conf
+        - name: xdmod-ingest-config
+          configMap:
+            name: xdmod-ingest-configmap
+            defaultMode: 0755
+            items:
+            - key: ingest.cfg
+              path: ingest.cfg
       initContainers:
         - name: {{ .Chart.Name }}-init
           securityContext:
@@ -75,6 +85,8 @@ spec:
               path: /
               port: http
           volumeMounts:
+            - mountPath: "/xdmod-ingest/"
+              name: xdmod-ingest
             - mountPath: "/etc/xdmod"
               name: xdmod-config
             - mountPath: "/var/lib/mysql"
@@ -96,6 +108,11 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            - mountPath: "/xdmod-ingest/"
+              name: xdmod-ingest
+            - name: xdmod-ingest-config
+              mountPath: "/xdmod-ingest/ingest.cfg"
+              subPath: ingest.cfg
             - mountPath: "/etc/munge/munge.key"
               name: xdmod-munge
               subPath: munge.key
